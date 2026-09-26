@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: helix-v5
+Version: 5.3.1
+Summary: Pump.fun-focused Solana memecoin intelligence and paper trading terminal
+Requires-Python: >=3.11
+License-File: LICENSE
+Requires-Dist: fastapi<1.0,>=0.115
+Requires-Dist: uvicorn[standard]<1.0,>=0.34
+Requires-Dist: httpx<1.0,>=0.28
+Requires-Dist: pydantic<3.0,>=2.10
+Requires-Dist: pydantic-settings<3.0,>=2.7
+Provides-Extra: dev
+Requires-Dist: pytest<9.0,>=8.0; extra == "dev"
+Requires-Dist: ruff<1.0,>=0.8; extra == "dev"
+Dynamic: license-file

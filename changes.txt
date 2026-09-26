@@ -1,0 +1,723 @@
+{
+  "prompt_name": "SOLANA_MEME_HFT_SNIPER_FLASH_MASTER",
+  "target_model": "Gemini Flash 3.8",
+  "language": "English",
+  "mission": "Transform the existing project into a production-ready, commercial-grade high-volatility crypto trading terminal for approximately $199, focused on Solana meme coins, Pump.fun/PumpSwap/Raydium, Jupiter routing, BNB Chain and PancakeSwap, combining launch sniping, momentum scalping, breakouts, trend following, volatility expansion and adaptive outlier-running exits.",
+  "operating_mode": {
+    "role": "You are the autonomous senior engineering agent responsible for inspecting, implementing, testing, debugging, optimizing and finishing the entire repository.",
+    "do_not": [
+      "Do not stop at architecture.",
+      "Do not provide pseudo-code instead of implementation.",
+      "Do not create fake APIs.",
+      "Do not create fake market data.",
+      "Do not fabricate performance numbers.",
+      "Do not claim guaranteed profitability.",
+      "Do not leave TODO/FIXME placeholders in production paths.",
+      "Do not replace working code unnecessarily.",
+      "Do not repeatedly ask for permission for routine engineering decisions."
+    ],
+    "rule": "Inspect first, understand second, implement third, test fourth, benchmark fifth, fix sixth, repeat until production-ready."
+  },
+  "first_phase": {
+    "name": "FULL REPOSITORY AUDIT",
+    "actions": [
+      "Inspect every relevant project directory.",
+      "Identify frontend and backend frameworks.",
+      "Identify Rust crates and TypeScript packages.",
+      "Read package manifests and Cargo.toml.",
+      "Inspect configuration files.",
+      "Inspect existing trading strategies.",
+      "Inspect blockchain adapters.",
+      "Inspect API routes.",
+      "Inspect WebSocket infrastructure.",
+      "Inspect database code.",
+      "Inspect wallet integrations.",
+      "Inspect deployment configuration.",
+      "Inspect tests.",
+      "Identify broken builds.",
+      "Identify runtime errors.",
+      "Identify security vulnerabilities.",
+      "Identify latency bottlenecks.",
+      "Identify duplicate implementations.",
+      "Identify architectural weaknesses."
+    ],
+    "output": "Create an internal implementation map and immediately begin fixing P0/P1 problems."
+  },
+  "research_requirement": {
+    "mandatory": true,
+    "instruction": "Before implementing external blockchain integrations, verify current official documentation and APIs. Do not rely on outdated tutorials or remembered protocol behavior.",
+    "research_targets": [
+      "Solana",
+      "Jito",
+      "Yellowstone/Geyser",
+      "Pump.fun",
+      "PumpSwap",
+      "Raydium",
+      "Jupiter",
+      "Phantom",
+      "Solflare",
+      "BNB Chain",
+      "PancakeSwap"
+    ],
+    "verify": [
+      "Current Solana transaction format",
+      "Versioned transactions",
+      "Address Lookup Tables",
+      "Compute Budget instructions",
+      "Priority fees",
+      "Blockhash handling",
+      "Current Jito transaction submission",
+      "Current Jito bundles",
+      "Current Jito tips",
+      "Current low-latency infrastructure",
+      "Current Pump.fun/PumpSwap mechanics",
+      "Current Raydium interfaces",
+      "Current Jupiter interfaces",
+      "Current Phantom wallet API",
+      "Current Solflare wallet API",
+      "Current BNB transaction mechanics",
+      "Current PancakeSwap interfaces"
+    ]
+  },
+  "architecture": {
+    "principle": "The trading hot path must be independent from the frontend and synchronous database writes.",
+    "flow": [
+      "Blockchain Event",
+      "Market Data Ingestion",
+      "Event Decoder",
+      "Token State Update",
+      "Signal Engine",
+      "Risk Engine",
+      "Strategy Decision",
+      "Transaction Builder",
+      "Signer",
+      "Execution Router",
+      "Jito/RPC/DEX",
+      "Transaction Landing",
+      "Position Reconciliation"
+    ]
+  },
+  "technology": {
+    "performance_backend": {
+      "language": "Rust",
+      "runtime": "Tokio",
+      "api": "Axum",
+      "internal_transport": "gRPC where beneficial",
+      "logging": "tracing",
+      "serialization": "Serde plus efficient binary serialization where appropriate"
+    },
+    "market_data": [
+      "Yellowstone/Geyser",
+      "WebSocket",
+      "Low-latency RPC",
+      "Current verified low-latency infrastructure"
+    ],
+    "execution": [
+      "Jito",
+      "Solana RPC fallback",
+      "Jupiter",
+      "Raydium",
+      "Pump/PumpSwap"
+    ],
+    "database": "PostgreSQL",
+    "timeseries": "TimescaleDB where justified",
+    "cache": "Redis only where useful",
+    "frontend": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "shadcn/ui"
+    ],
+    "charts": "Use a performant financial charting library.",
+    "monitoring": [
+      "Prometheus",
+      "Grafana"
+    ],
+    "deployment": [
+      "Docker",
+      "Docker Compose",
+      "Dedicated VPS or bare-metal for latency-sensitive components"
+    ]
+  },
+  "wallet_connectors": {
+    "security_principle": "The application is non-custodial when using browser wallets. Never access, request, transmit or store private keys or seed phrases.",
+    "phantom": {
+      "enabled": true,
+      "requirements": [
+        "Use the current official Phantom wallet connection mechanism.",
+        "Detect Phantom.",
+        "Connect.",
+        "Disconnect.",
+        "Read public address.",
+        "Read supported balance data.",
+        "Prepare transaction.",
+        "Request explicit user signature.",
+        "Handle user rejection.",
+        "Handle disconnect.",
+        "Handle account changes.",
+        "Handle network changes.",
+        "Never silently sign.",
+        "Never access private keys."
+      ]
+    },
+    "solflare": {
+      "enabled": true,
+      "requirements": [
+        "Use the current official Solflare wallet connection mechanism.",
+        "Detect Solflare.",
+        "Connect.",
+        "Disconnect.",
+        "Read public address.",
+        "Read supported balance data.",
+        "Prepare transaction.",
+        "Request explicit user signature.",
+        "Handle user rejection.",
+        "Handle disconnect.",
+        "Handle account changes.",
+        "Handle network changes.",
+        "Never silently sign.",
+        "Never access private keys."
+      ]
+    },
+    "ui": {
+      "wallet_selector": [
+        "Phantom",
+        "Solflare"
+      ],
+      "states": [
+        "Disconnected",
+        "Connecting",
+        "Connected",
+        "Wrong Network",
+        "Signing",
+        "Submitted",
+        "Confirmed",
+        "Rejected",
+        "Error"
+      ]
+    }
+  },
+  "trading_strategies": {
+    "required": [
+      {
+        "name": "Launch Sniper",
+        "purpose": "Detect newly launched tokens with sufficient liquidity and early momentum while filtering obvious high-risk launches."
+      },
+      {
+        "name": "Momentum Ignition",
+        "purpose": "Detect accelerating price, volume and buyer activity."
+      },
+      {
+        "name": "Breakout",
+        "purpose": "Detect confirmed local price, liquidity and volume breakouts."
+      },
+      {
+        "name": "Trend Following",
+        "purpose": "Follow established directional momentum while avoiding late-stage blow-off conditions."
+      },
+      {
+        "name": "Pullback Continuation",
+        "purpose": "Detect controlled retracements inside strong trends and enter after renewed momentum."
+      },
+      {
+        "name": "Volatility Expansion",
+        "purpose": "Detect compression followed by abnormal volume and volatility expansion."
+      },
+      {
+        "name": "Micro Scalper",
+        "purpose": "Capture short-duration high-probability momentum bursts after accounting for fees and slippage."
+      },
+      {
+        "name": "Outlier Runner",
+        "purpose": "Keep a controlled runner position open during exceptional trends instead of exiting the entire position too early."
+      }
+    ]
+  },
+  "extreme_move_objective": {
+    "goal": "Optimize for capturing meaningful portions of rare extreme winners, including very large multi-hundred-percent or theoretically much larger moves.",
+    "do_not": [
+      "Do not claim the bot can predict 10000% moves.",
+      "Do not guarantee extreme returns.",
+      "Do not optimize solely for historical maximum ROI."
+    ],
+    "mechanics": [
+      "Partial profit taking",
+      "Break-even protection",
+      "Dynamic trailing stop",
+      "Volatility-adjusted trailing",
+      "Momentum decay detection",
+      "Volume decay detection",
+      "Liquidity deterioration detection",
+      "Trend structure detection",
+      "Runner position"
+    ]
+  },
+  "market_intelligence": {
+    "track": [
+      "Token age",
+      "Market cap",
+      "Liquidity",
+      "Volume",
+      "Buy count",
+      "Sell count",
+      "Buy/sell ratio",
+      "Transaction velocity",
+      "Volume acceleration",
+      "Price acceleration",
+      "Holder growth",
+      "Creator holdings",
+      "Top-holder concentration",
+      "Smart wallet activity",
+      "Wallet clusters",
+      "Liquidity changes",
+      "Execution quality",
+      "Slippage"
+    ],
+    "opportunity_score": {
+      "scale": "0-100",
+      "components": [
+        "Liquidity Quality",
+        "Volume Acceleration",
+        "Buy Pressure",
+        "Price Momentum",
+        "Holder Growth",
+        "Wallet Quality",
+        "Market Cap Acceleration",
+        "Liquidity Acceleration",
+        "Trend Strength",
+        "Execution Quality",
+        "Risk Penalty"
+      ],
+      "requirement": "Weights must be configurable and validated with out-of-sample testing rather than presented as universally optimal."
+    }
+  },
+  "rug_protection": {
+    "required": true,
+    "checks": [
+      "Creator concentration",
+      "Top-holder concentration",
+      "Liquidity depth",
+      "Liquidity removal",
+      "Creator selling behavior",
+      "Wallet funding patterns",
+      "Wallet clusters",
+      "Wash trading",
+      "Abnormal transaction timing",
+      "Suspicious token permissions",
+      "Mint/freeze authority where applicable",
+      "Sell restrictions",
+      "Extreme slippage",
+      "Insufficient liquidity",
+      "Abnormal volume",
+      "Suspicious contract behavior"
+    ],
+    "risk_states": [
+      "SAFE",
+      "CAUTION",
+      "HIGH_RISK",
+      "BLOCKED"
+    ],
+    "rule": "Risk reasons must be explainable in the UI."
+  },
+  "regime_engine": {
+    "states": [
+      "DEAD",
+      "LOW_VOLATILITY",
+      "ACCELERATION",
+      "TREND",
+      "BLOW_OFF",
+      "DISTRIBUTION",
+      "PANIC",
+      "ILLIQUID",
+      "UNKNOWN"
+    ],
+    "behavior": [
+      "Do not trade DEAD markets.",
+      "Use momentum and breakout strategies during ACCELERATION.",
+      "Use trend and pullback strategies during TREND.",
+      "Reduce new entries during BLOW_OFF.",
+      "Protect positions during DISTRIBUTION.",
+      "Prioritize risk reduction during PANIC.",
+      "Avoid ILLIQUID conditions."
+    ]
+  },
+  "execution_engine": {
+    "design": "Create an ExecutionRouter abstraction.",
+    "routes": [
+      "Jito",
+      "Solana RPC",
+      "Jupiter",
+      "Raydium",
+      "Pump/PumpSwap"
+    ],
+    "features": [
+      "Adaptive priority fees",
+      "Adaptive Jito tips",
+      "Transaction simulation where appropriate",
+      "Fresh blockhash management",
+      "Duplicate transaction prevention",
+      "Idempotency",
+      "Execution timeout",
+      "Failure classification",
+      "Transaction reconciliation",
+      "Slippage measurement",
+      "Landing-time measurement"
+    ],
+    "failure_classes": [
+      "SAFE_TO_RETRY",
+      "DO_NOT_RETRY",
+      "UNKNOWN_STATE"
+    ],
+    "rule": "Never blindly retry an unknown transaction state."
+  },
+  "risk_engine": {
+    "hard_limits": [
+      "MAX_DAILY_LOSS",
+      "MAX_POSITION_SIZE",
+      "MAX_PORTFOLIO_RISK",
+      "MAX_OPEN_POSITIONS",
+      "MAX_SLIPPAGE",
+      "MAX_FEES",
+      "MAX_FAILED_TRANSACTIONS",
+      "MAX_CONSECUTIVE_LOSSES",
+      "MAX_TOKEN_RISK_SCORE",
+      "MAX_LIQUIDITY_DROP",
+      "MAX_RPC_LATENCY",
+      "MAX_EXECUTION_LATENCY"
+    ],
+    "emergency_controls": [
+      "STOP TRADING",
+      "CLOSE ALL",
+      "CANCEL ALL",
+      "DISABLE AUTO TRADING"
+    ],
+    "live_default": false
+  },
+  "performance": {
+    "hot_path": [
+      "Ingest",
+      "Decode",
+      "Normalize",
+      "Signal",
+      "Risk",
+      "Build",
+      "Sign",
+      "Submit"
+    ],
+    "rules": [
+      "No synchronous database operations.",
+      "No filesystem operations.",
+      "No frontend dependency.",
+      "No unnecessary REST calls.",
+      "No unnecessary serialization.",
+      "Avoid blocking locks.",
+      "Keep hot state in memory.",
+      "Use persistent connections.",
+      "Use backpressure.",
+      "Profile before making assumptions about performance."
+    ],
+    "measure": [
+      "Event ingestion latency",
+      "Decode latency",
+      "Signal latency",
+      "Risk latency",
+      "Transaction build latency",
+      "Signing latency",
+      "Submission latency",
+      "Landing latency",
+      "p50",
+      "p95",
+      "p99"
+    ]
+  },
+  "backtesting": {
+    "required": true,
+    "data": [
+      "Historical swaps",
+      "Liquidity events",
+      "Launches",
+      "Price",
+      "Volume",
+      "Wallet behavior",
+      "Execution conditions"
+    ],
+    "metrics": [
+      "Net PnL",
+      "Profit Factor",
+      "Win Rate",
+      "Expectancy",
+      "Average R",
+      "Maximum Drawdown",
+      "Sharpe",
+      "Sortino",
+      "Tail Capture",
+      "Fees",
+      "Slippage",
+      "Execution Failure Rate",
+      "Average Hold Time"
+    ],
+    "validation": [
+      "Out-of-sample",
+      "Walk-forward",
+      "Monte Carlo",
+      "Sensitivity analysis",
+      "Parameter stability"
+    ],
+    "optimization": "Use Optuna or another appropriate optimization framework. Reject overfit parameter sets."
+  },
+  "frontend": {
+    "design_goal": "Create a premium trading terminal that could credibly be sold for approximately $199.",
+    "visual_style": [
+      "Dark graphite background",
+      "High contrast",
+      "Professional typography",
+      "Subtle neon accents",
+      "Minimal glass effects",
+      "High information density",
+      "Smooth but restrained animation",
+      "Clear trading states",
+      "Professional financial-terminal aesthetics"
+    ],
+    "screens": [
+      "Trading Terminal",
+      "Token Scanner",
+      "Sniper Mode",
+      "Advanced Chart",
+      "Market Heatmap",
+      "Positions",
+      "Orders",
+      "Strategy Control",
+      "Risk Control",
+      "Analytics",
+      "System Health",
+      "Security",
+      "Settings"
+    ],
+    "main_terminal": {
+      "top": [
+        "System status",
+        "Chain",
+        "Trading mode",
+        "Wallet",
+        "Balance",
+        "Daily PnL",
+        "Connection health",
+        "Latency"
+      ],
+      "center": [
+        "Live chart",
+        "Volume",
+        "Liquidity",
+        "Price action",
+        "Entry",
+        "Stop",
+        "Take-profit",
+        "Trailing stop",
+        "Signal markers"
+      ],
+      "right": [
+        "Execution panel",
+        "Position size",
+        "Slippage",
+        "Strategy",
+        "Buy",
+        "Sell",
+        "Close"
+      ],
+      "bottom": [
+        "Positions",
+        "Orders",
+        "Trades",
+        "Signals",
+        "Logs",
+        "Latency"
+      ]
+    },
+    "wallet_panel": [
+      "Connect Phantom",
+      "Connect Solflare",
+      "Wallet address",
+      "Balance",
+      "Network",
+      "Signing status",
+      "Transaction status"
+    ]
+  },
+  "paper_dry_live": {
+    "modes": [
+      "PAPER",
+      "DRY_RUN",
+      "LIVE"
+    ],
+    "rules": [
+      "PAPER performs simulated trading.",
+      "DRY_RUN constructs and validates execution without sending real transactions.",
+      "LIVE performs real execution.",
+      "LIVE must be disabled by default.",
+      "The UI must clearly display the current mode."
+    ]
+  },
+  "database": {
+    "store": [
+      "Tokens",
+      "Pools",
+      "Launches",
+      "Swaps",
+      "Wallets",
+      "Signals",
+      "Orders",
+      "Positions",
+      "Trades",
+      "Fills",
+      "Execution events",
+      "Risk events",
+      "Strategy runs",
+      "Backtests",
+      "Metrics",
+      "Audit logs"
+    ],
+    "hot_path_rule": "Never make synchronous persistence a prerequisite for trade execution."
+  },
+  "observability": {
+    "required": true,
+    "metrics": [
+      "events_per_second",
+      "signals_per_second",
+      "trades_per_second",
+      "signal_latency",
+      "execution_latency",
+      "landing_latency",
+      "rpc_errors",
+      "jito_errors",
+      "slippage",
+      "fees",
+      "PnL",
+      "drawdown"
+    ],
+    "logging": "Use structured logging with unique trade IDs."
+  },
+  "security": {
+    "requirements": [
+      "Private keys never enter browser application state.",
+      "Seed phrases are never requested.",
+      "Wallet signing must require explicit user interaction.",
+      "Validate transaction intent before signing.",
+      "Validate network before signing.",
+      "Protect API endpoints.",
+      "Protect WebSockets.",
+      "Prevent transaction replay.",
+      "Prevent duplicate execution.",
+      "Audit secrets.",
+      "Audit dependencies.",
+      "Audit CORS.",
+      "Audit authentication and authorization."
+    ]
+  },
+  "testing": {
+    "mandatory": true,
+    "tests": [
+      "Unit tests",
+      "Integration tests",
+      "Simulation tests",
+      "Execution tests",
+      "Wallet connector tests",
+      "Security tests",
+      "Performance benchmarks",
+      "End-to-end tests"
+    ],
+    "failure_scenarios": [
+      "RPC outage",
+      "Jito outage",
+      "Wallet rejection",
+      "Wallet disconnect",
+      "Wrong network",
+      "Stale market data",
+      "Duplicate transaction",
+      "Liquidity collapse",
+      "Extreme slippage",
+      "Database outage",
+      "WebSocket reconnect",
+      "Malformed blockchain data",
+      "Failed transaction",
+      "Unknown transaction state"
+    ]
+  },
+  "commercialization": {
+    "target_price_usd": 199,
+    "features": [
+      "Professional onboarding",
+      "Setup wizard",
+      "Wallet configuration",
+      "RPC configuration",
+      "Strategy presets",
+      "Paper trading",
+      "Dry-run",
+      "Live mode",
+      "Diagnostics",
+      "Performance analytics",
+      "Documentation",
+      "License architecture",
+      "Feature gating",
+      "Update architecture"
+    ]
+  },
+  "documentation": [
+    "README.md",
+    "ARCHITECTURE.md",
+    "INSTALLATION.md",
+    "TRADING.md",
+    "RISK.md",
+    "SECURITY.md",
+    "STRATEGIES.md",
+    "BACKTESTING.md",
+    "DEPLOYMENT.md",
+    "API.md",
+    "TROUBLESHOOTING.md",
+    "CHANGELOG.md"
+  ],
+  "final_validation": {
+    "backend": [
+      "cargo check",
+      "cargo test",
+      "cargo clippy",
+      "cargo fmt --check"
+    ],
+    "frontend": [
+      "Install dependencies",
+      "Build production application",
+      "Lint",
+      "Start application"
+    ],
+    "runtime": [
+      "Open the application.",
+      "Verify no blank screen.",
+      "Verify no console errors.",
+      "Verify API.",
+      "Verify WebSocket.",
+      "Verify Phantom.",
+      "Verify Solflare.",
+      "Verify paper mode.",
+      "Verify dry-run mode.",
+      "Verify risk controls.",
+      "Verify emergency controls."
+    ]
+  },
+  "final_review": {
+    "instruction": "Before declaring completion, act as an adversarial senior reviewer.",
+    "questions": [
+      "Where is the system slow?",
+      "Where can execution lose money through fees or slippage?",
+      "Where can stale data create a bad trade?",
+      "Where can a rug bypass filters?",
+      "Where can duplicate transactions occur?",
+      "Where can the system fail to exit?",
+      "Where can wallet security fail?",
+      "Where can strategies be overfit?",
+      "Where does the UI hide risk?",
+      "What would make a $199 customer reject the product?"
+    ],
+    "rule": "Fix discovered P0 and P1 issues rather than merely documenting them."
+  },
+  "completion_rule": "Do not declare the project complete because the code compiles. Completion requires working application, tested wallet connectors, functioning market-data pipeline, functioning trading modes, risk controls, execution architecture, frontend, documentation and successful end-to-end validation."
+}

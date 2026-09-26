@@ -1,0 +1,27 @@
+HELIX V5.2 — WINDOWS QUICKSTART
+
+IMPORTANT: install dependencies BEFORE running `python -m app.main`.
+
+Recommended:
+1. Double-click START_HELIX_WINDOWS.bat
+
+PowerShell:
+2. py -m venv .venv
+3. .\.venv\Scripts\Activate.ps1
+4. python -m pip install -U pip
+5. pip install -e ".[dev]"
+6. copy .env.example .env
+7. python -m app.main
+
+Open http://127.0.0.1:8088
+
+Pump.fun data:
+- Put your current JWT into PUMPFUN_AUTH_TOKEN in .env or Settings -> Pump.fun Provider.
+- The scanner uses real Pump.fun data. No demo/synthetic coins are generated.
+
+Troubleshooting:
+- If SQLite was open in another HELIX process, V5.2 waits a bounded amount of time instead of hanging forever at PRAGMA journal_mode.
+- If a browser tab has stale frontend JavaScript, use Ctrl+F5.
+- Strategy state can be checked at GET /api/strategy.
+
+Do NOT put a private wallet key into this release.
